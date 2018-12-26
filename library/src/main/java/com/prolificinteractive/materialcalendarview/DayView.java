@@ -15,12 +15,20 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatCheckedTextView;
+import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
+
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
+
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 import java.util.List;
 
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.showDecoratedDisabled;
@@ -66,7 +74,13 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
 
   public void setDay(CalendarDay date) {
     this.date = date;
-    setText(getLabel());
+
+    Spannable spannable = getSpannableLabel();
+    if(spannable != null){
+      setText(spannable, TextView.BufferType.SPANNABLE);
+    }else {
+      setText(getLabel());
+    }
   }
 
   /**
@@ -78,18 +92,25 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
     this.contentDescriptionFormatter = contentDescriptionFormatter == this.formatter ?
                                        formatter : contentDescriptionFormatter;
     this.formatter = formatter == null ? DayFormatter.DEFAULT : formatter;
-    CharSequence currentLabel = getText();
-    Object[] spans = null;
-    if (currentLabel instanceof Spanned) {
-      spans = ((Spanned) currentLabel).getSpans(0, currentLabel.length(), Object.class);
+//    CharSequence currentLabel = getText();
+//    Object[] spans = null;
+//    if (currentLabel instanceof Spanned) {
+//      spans = ((Spanned) currentLabel).getSpans(0, currentLabel.length(), Object.class);
+//    }
+//    SpannableString newLabel = new SpannableString(getLabel());
+//    if (spans != null) {
+//      for (Object span : spans) {
+//        newLabel.setSpan(span, 0, newLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//      }
+//    }
+//    setText(newLabel);
+
+    Spannable spannable = getSpannableLabel();
+    if(spannable != null){
+      setText(spannable, TextView.BufferType.SPANNABLE);
+    }else {
+      setText(getLabel());
     }
-    SpannableString newLabel = new SpannableString(getLabel());
-    if (spans != null) {
-      for (Object span : spans) {
-        newLabel.setSpan(span, 0, newLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-      }
-    }
-    setText(newLabel);
   }
 
   /**
@@ -105,6 +126,10 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
   @NonNull
   public String getLabel() {
     return formatter.format(date);
+  }
+
+  public Spannable getSpannableLabel() {
+    return formatter.spannableFormat(date);
   }
 
   @NonNull

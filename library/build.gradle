@@ -8,7 +8,6 @@ android {
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-
     versionCode Integer.parseInt(project.VERSION_CODE)
     versionName project.VERSION_NAME
 
@@ -30,7 +29,6 @@ dependencies {
   implementation rootProject.ext.supportV4
   implementation rootProject.ext.supportAppCompat
   implementation rootProject.ext.supportAnnotations
-
   rootProject.ext.testDep.each { testImplementation it }
   rootProject.ext.androidTestDep.each { androidTestImplementation it }
 }

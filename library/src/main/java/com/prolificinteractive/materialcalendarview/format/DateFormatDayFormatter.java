@@ -1,6 +1,8 @@
 package com.prolificinteractive.materialcalendarview.format;
 
 import android.support.annotation.NonNull;
+import android.text.Spannable;
+
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.text.DateFormat;
 import java.util.Locale;
@@ -34,5 +36,11 @@ public class DateFormatDayFormatter implements DayFormatter {
    */
   @Override @NonNull public String format(@NonNull final CalendarDay day) {
     return dateFormat.format(day.getDate());
+  }
+
+  @NonNull
+  @Override
+  public Spannable spannableFormat(@NonNull CalendarDay day) {
+    return null;
   }
 }
