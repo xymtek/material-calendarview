@@ -300,7 +300,12 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
     }
     // Reset in case it was customized previously
     else {
-      setText(getLabel());
+      Spannable spannable = getSpannableLabel();
+      if(spannable != null){
+        setText(spannable, TextView.BufferType.SPANNABLE);
+      }else {
+        setText(getLabel());
+      }
     }
   }
 
